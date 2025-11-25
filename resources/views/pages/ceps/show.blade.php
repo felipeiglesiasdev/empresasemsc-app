@@ -31,7 +31,7 @@
             {{-- Lista de empresas --}}
             <x-ceps.show.listing :empresas="$empresas" />
 
-            {{-- FAQ otimizado para SEO --}}
+            {{-- FAQ com respostas rápidas --}}
             <x-ceps.show.faq
                 :cepFormatado="$cepFormatado"
                 :totalEmpresas="$totalEmpresas"

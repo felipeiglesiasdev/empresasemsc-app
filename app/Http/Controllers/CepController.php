@@ -12,14 +12,15 @@ class CepController extends Controller
 
     public function index(Request $request)
     {
-        $ceps = Estabelecimento::select('cep', 'municipio', DB::raw('COUNT(*) as total_empresas'))
+        $cepsDestaque = Estabelecimento::select('cep', 'municipio', DB::raw('COUNT(*) as total_empresas'))
             ->where('uf', self::UF_FILTRO)
             ->where('situacao_cadastral', 2)
             ->whereNotNull('cep')
             ->with('municipioRel:codigo,descricao')
             ->groupBy('cep', 'municipio')
             ->orderByDesc('total_empresas')
-            ->paginate(60);
+            ->take(12)
+            ->get();
 
         $totalCeps = Estabelecimento::where('uf', self::UF_FILTRO)
             ->where('situacao_cadastral', 2)
@@ -33,7 +34,7 @@ class CepController extends Controller
             ->count();
 
         return view('pages.ceps.index', [
-            'ceps' => $ceps,
+            'cepsDestaque' => $cepsDestaque,
             'totalCeps' => $totalCeps,
             'totalEmpresasEstado' => $totalEmpresasEstado,
         ]);
@@ -67,12 +68,18 @@ class CepController extends Controller
             ->whereNotNull('cep')
             ->count();
 
-        $topCnaes = Estabelecimento::where('cep', $cepLimpo)
-            ->where('uf', self::UF_FILTRO)
-            ->where('situacao_cadastral', 2)
-            ->whereNotNull('cep')
-            ->select('cnae_fiscal', DB::raw('COUNT(*) as total'))
-            ->groupBy('cnae_fiscal')
+        $topCnaes = Estabelecimento::where('estabelecimentos.cep', $cepLimpo)
+            ->where('estabelecimentos.uf', self::UF_FILTRO)
+            ->where('estabelecimentos.situacao_cadastral', 2)
+            ->whereNotNull('estabelecimentos.cep')
+            ->whereNotNull('estabelecimentos.cnae_fiscal_principal')
+            ->leftJoin('cnaes as c', 'estabelecimentos.cnae_fiscal_principal', '=', 'c.codigo')
+            ->select(
+                'estabelecimentos.cnae_fiscal_principal',
+                DB::raw('COUNT(*) as total'),
+                DB::raw('COALESCE(c.descricao, "Descrição não informada") as descricao')
+            )
+            ->groupBy('estabelecimentos.cnae_fiscal_principal', 'c.descricao')
             ->orderByDesc('total')
             ->take(5)
             ->get();

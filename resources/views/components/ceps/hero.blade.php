@@ -27,18 +27,65 @@
                 </div>
             </div>
 
-            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 text-white max-w-sm w-full">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-indigo-800 flex items-center justify-center shadow-inner">
-                        <i class="bi bi-geo-alt text-xl"></i>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 text-white max-w-sm w-full" x-data="cepBusca()">
+                <form class="space-y-3" @submit.prevent="redirecionar">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-800 flex items-center justify-center shadow-inner">
+                            <i class="bi bi-geo-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs uppercase tracking-widest text-indigo-200">Buscar CEP</div>
+                            <div class="text-lg font-bold">Consulta em tempo real</div>
+                            <p class="text-xs text-indigo-100 mt-1">Digite o CEP de Santa Catarina para ver empresas no endereço.</p>
+                        </div>
                     </div>
+
                     <div>
-                        <div class="text-xs uppercase tracking-widest text-indigo-200">Cobertura</div>
-                        <div class="text-lg font-bold">Todos os municípios de SC</div>
-                        <p class="text-xs text-indigo-100 mt-1">Selecione um CEP para ver a lista de empresas e melhorar seu SEO local.</p>
+                        <label class="text-xs uppercase tracking-widest text-indigo-200">CEP</label>
+                        <div class="mt-2 flex items-center gap-2">
+                            <input
+                                type="text"
+                                x-model="cepDigitado"
+                                @input="formatar()"
+                                maxlength="9"
+                                inputmode="numeric"
+                                placeholder="00000-000"
+                                class="w-full px-3 py-2 rounded-lg bg-white/20 border border-white/30 placeholder-indigo-200 text-white focus:outline-none focus:ring-2 focus:ring-white/60"
+                            />
+                            <button type="submit" class="px-4 py-2 bg-white text-indigo-900 font-bold rounded-lg disabled:opacity-40 disabled:cursor-not-allowed" :disabled="!valido">Buscar</button>
+                        </div>
+                        <p class="text-[11px] mt-1" :class="valido ? 'text-indigo-100' : 'text-red-200'" x-text="mensagem"></p>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    function cepBusca() {
+        return {
+            cepDigitado: '',
+            valido: false,
+            mensagem: 'Informe 8 dígitos ou use o formato 00000-000.',
+            formatar() {
+                const apenasNumeros = this.cepDigitado.replace(/\D/g, '').slice(0, 8);
+                if (apenasNumeros.length > 5) {
+                    this.cepDigitado = `${apenasNumeros.slice(0, 5)}-${apenasNumeros.slice(5)}`;
+                } else {
+                    this.cepDigitado = apenasNumeros;
+                }
+                this.valido = apenasNumeros.length === 8;
+                this.mensagem = this.valido
+                    ? 'Pronto! Clique em buscar para ver as empresas do CEP.'
+                    : 'Informe 8 dígitos ou use o formato 00000-000.';
+                this.cepLimpo = apenasNumeros;
+            },
+            redirecionar() {
+                if (!this.valido) return;
+                const url = `{{ route('ceps.show', ['cep' => '__CEP__']) }}`.replace('__CEP__', this.cepDigitado.replace(/\D/g, ''));
+                window.location.href = url;
+            },
+        };
+    }
+</script>

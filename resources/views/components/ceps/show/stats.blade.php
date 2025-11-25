@@ -39,9 +39,9 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             @foreach($topCnaes as $cnae)
                 <div class="border border-gray-100 rounded-lg p-4 bg-gray-50">
-                    <div class="text-xs uppercase text-gray-500">CNAE {{ $cnae->cnae_fiscal }}</div>
-                    <div class="text-lg font-bold text-gray-900">{{ number_format($cnae->total, 0, ',', '.') }} empresas</div>
-                    <p class="text-xs text-gray-500 mt-1">Atividade recorrente entre as empresas deste CEP.</p>
+                    <div class="text-xs uppercase text-gray-500">CNAE {{ $cnae->cnae_fiscal_principal }}</div>
+                    <div class="text-lg font-bold text-gray-900">{{ $cnae->descricao }}</div>
+                    <p class="text-xs text-gray-500 mt-1">{{ number_format($cnae->total, 0, ',', '.') }} empresa(s) registrada(s) com essa atividade.</p>
                 </div>
             @endforeach
         </div>

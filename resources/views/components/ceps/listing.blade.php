@@ -3,10 +3,10 @@
 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
     <div class="px-6 py-5 border-b border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-            <h2 class="text-xl font-bold text-gray-900">CEPs com empresas ativas</h2>
-            <p class="text-sm text-gray-500">Ordenados pelos CEPs com maior quantidade de estabelecimentos.</p>
+            <h2 class="text-xl font-bold text-gray-900">CEPs em destaque</h2>
+            <p class="text-sm text-gray-500">Sugestões com maior concentração de empresas ativas.</p>
         </div>
-        <div class="text-sm text-gray-500">Mostrando {{ $ceps->firstItem() }}–{{ $ceps->lastItem() }} de {{ number_format($ceps->total(), 0, ',', '.') }} CEPs</div>
+        <div class="text-sm text-gray-500">{{ count($ceps) }} CEPs sugeridos</div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6">
@@ -25,14 +25,8 @@
                         {{ number_format($cep->total_empresas, 0, ',', '.') }} empresas
                     </div>
                 </div>
-                <p class="text-xs text-gray-500 mt-3">SEO local: página otimizada para o CEP como palavra-chave.</p>
+                <p class="text-xs text-gray-500 mt-3">Clique para ver empresas registradas neste CEP.</p>
             </a>
         @endforeach
     </div>
-
-    @if($ceps->hasPages())
-        <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
-            {{ $ceps->links() }}
-        </div>
-    @endif
 </div>
