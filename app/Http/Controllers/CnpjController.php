@@ -249,7 +249,7 @@ class CnpjController extends Controller
             'meta_data' => $metaData
         ];
 
-        return view('cnpj.show', ['data' => $dadosParaExibir]);
+        return view('pages.cnpj.show', ['data' => $dadosParaExibir]);
     }
     
     private function findSimilarCompanies(Estabelecimento $estabelecimento): array
