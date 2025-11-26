@@ -61,7 +61,7 @@
         </div>
     </div>
 </section>
-
+@push('scripts')
 <script>
     function cepBusca() {
         return {
@@ -92,3 +92,4 @@
         };
     }
 </script>
+@endpush
