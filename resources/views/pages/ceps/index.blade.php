@@ -13,8 +13,10 @@
         :totalEmpresasEstado="$totalEmpresasEstado"
     />
 
+
+
     {{-- Destaques --}}
-    <section class="py-12 bg-gray-50 min-h-screen">
+    <section class="py-12 min-h-screen">
         <div class="container mx-auto px-4">
             <x-ceps.listing :ceps="$cepsDestaque" />
         </div>

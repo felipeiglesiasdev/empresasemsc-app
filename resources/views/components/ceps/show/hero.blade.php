@@ -28,7 +28,7 @@
                     Empresas no CEP {{ $cepFormatado }}
                 </h1>
                 <p class="text-indigo-200 text-sm sm:text-base mt-2 max-w-2xl">
-                    Endereço em {{ $dadosCep->municipioRel->descricao ?? 'Santa Catarina' }} com {{ number_format($totalEmpresas, 0, ',', '.') }} empresas ativas cadastradas.
+                    CEP localizado em {{ $dadosCep->municipioRel->descricao ?? 'Santa Catarina' }} com {{ number_format($totalEmpresas, 0, ',', '.') }} empresas ativas cadastradas.
                 </p>
             </div>
 

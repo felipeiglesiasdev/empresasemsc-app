@@ -1,6 +1,6 @@
 @props(['data'])
 
-<div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden sticky top-6">
+<div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden top-6">
     <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center gap-3 justify-between">
         <div class="flex items-center gap-3">
             <div class="bg-indigo-100 text-indigo-600 p-2 rounded-lg">
@@ -12,27 +12,16 @@
     </div>
 
     <div class="p-6 space-y-6">
-
-        {{-- Endereço --}}
+        {{-- Endereço resumido --}}
         <div>
-            <p class="text-gray-800 font-medium text-lg mb-1">
-                {{ $data['logradouro'] }}
-                @if($data['complemento']) <br><span class="text-sm text-gray-500">{{ $data['complemento'] }}</span> @endif
-            </p>
-            <p class="text-gray-600 mb-3">
-                {{ $data['bairro'] }} <br>
-                {{ $data['cidade_uf'] }} <br>
-                CEP: {{ $data['cep'] }}
-            </p>
-
-            <a href="{{ $data['google_maps_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full px-4 py-2 bg-white border border-indigo-200 text-indigo-600 font-bold rounded-lg hover:bg-indigo-50 transition-colors text-sm shadow-sm">
-                <i class="bi bi-map mr-2"></i> Ver no Google Maps
-            </a>
+            <!-- Exibimos apenas bairro e cidade/UF para proteger informações sensíveis -->
+            <p class="text-gray-800 font-medium text-lg mb-1">{{ $data['bairro'] }}</p>
+            <p class="text-gray-600 mb-3">{{ $data['cidade_uf'] }}</p>
         </div>
 
         <hr class="border-gray-100">
 
-        {{-- Contatos --}}
+        {{-- Contatos (ocultos) --}}
         <div class="space-y-3">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
@@ -54,8 +43,9 @@
                 </div>
             </div>
 
-            <p class="text-xs text-gray-500 leading-relaxed">Os dados de contato foram ocultados com *** porque não podem ser exibidos publicamente conforme a Lei Geral de Proteção de Dados (LGPD).</p>
+            <p class="text-xs text-gray-500 leading-relaxed">
+                Os dados de contato foram ocultados com *** porque não podem ser exibidos publicamente conforme a Lei Geral de Proteção de Dados (LGPD).
+            </p>
         </div>
-
     </div>
 </div>

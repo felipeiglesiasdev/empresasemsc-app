@@ -28,16 +28,16 @@
         <div class="container mx-auto px-4 space-y-10">
 
             <div class="space-y-6">
-                {{-- Tags e contexto rápido --}}
-                <x-cnpj.tags :data="$data" />
+
+                {{-- Tags removidas para esta página --}}
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                     {{-- Coluna Principal (Esquerda) --}}
                     <div class="lg:col-span-2 space-y-8">
-                        <x-cnpj.basic-info :data="$data" />
+                       <x-cnpj.basic-info :data="$data" />
                         <x-cnpj.activities :data="$data" />
-                        <x-cnpj.partners :data="$data" />
+                        <x-cnpj.removal :data="$data" />
                     </div>
 
                     {{-- Coluna Lateral (Direita) --}}
@@ -63,44 +63,8 @@
             </div>
 
             {{-- FAQ sobre o CNPJ --}}
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-6">
-                <div class="flex items-center gap-3">
-                    <div class="bg-indigo-100 text-indigo-600 p-2 rounded-lg">
-                        <i class="bi bi-question-circle text-lg"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900">Perguntas frequentes sobre este CNPJ</h2>
-                        <p class="text-sm text-gray-600">Informações gerais para entender o cadastro da empresa.</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2">
-                        <p class="font-semibold text-gray-900">1. Qual é a natureza jurídica desta empresa?</p>
-                        <p class="text-gray-600">A natureza jurídica informada é "{{ $data['natureza_juridica'] }}", que define o enquadramento legal do negócio.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="font-semibold text-gray-900">2. Qual é a principal atividade econômica?</p>
-                        <p class="text-gray-600">O CNAE principal é {{ $data['cnae_principal']['codigo'] }} - {{ $data['cnae_principal']['descricao'] }}, conforme registro ativo.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="font-semibold text-gray-900">3. Onde a empresa está localizada?</p>
-                        <p class="text-gray-600">O endereço público informado é {{ $data['logradouro'] }}, {{ $data['bairro'] }} - {{ $data['cidade_uf'] }}.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="font-semibold text-gray-900">4. Qual é o porte e capital social?</p>
-                        <p class="text-gray-600">A empresa é classificada como "{{ $data['porte'] }}" e possui capital social declarado de R$ {{ $data['capital_social'] }}.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="font-semibold text-gray-900">5. Como está a situação cadastral?</p>
-                        <p class="text-gray-600">A situação atual é "{{ $data['situacao_cadastral'] }}" desde {{ $data['data_situacao_cadastral'] }}.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="font-semibold text-gray-900">6. Por que dados de contato não aparecem?</p>
-                        <p class="text-gray-600">E-mail, telefones e identificação dos sócios são ocultados com *** e não podem ser exibidos por proteção prevista na LGPD.</p>
-                    </div>
-                </div>
-            </div>
+            {{-- Substituímos a FAQ estática por um componente interativo que segue o padrão das outras páginas e inclui palavras-chave para SEO. --}}
+            <x-cnpj.faq :data="$data" />
 
             {{-- Botão Voltar --}}
             <div class="text-center">

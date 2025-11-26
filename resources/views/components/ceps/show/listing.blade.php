@@ -7,7 +7,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-4 font-bold text-indigo-900">CNPJ / Abertura</th>
                     <th scope="col" class="px-6 py-4 font-bold text-indigo-900">Empresa</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-indigo-900 hidden md:table-cell">Endereço</th>
+                    <th scope="col" class="px-6 py-4 font-bold text-indigo-900 text-right">Capital social</th>
                     <th scope="col" class="px-6 py-4 text-right font-bold text-indigo-900">Ação</th>
                 </tr>
             </thead>
@@ -38,16 +38,14 @@
                                 </div>
                             @endif
                         </td>
-                        <td class="px-6 py-4 hidden md:table-cell">
-                            <div class="text-gray-700 font-medium truncate max-w-xs" title="{{ $estabelecimento->tipo_logradouro }} {{ $estabelecimento->logradouro }}, {{ $estabelecimento->numero }}">
-                                {{ $estabelecimento->tipo_logradouro }} {{ $estabelecimento->logradouro }}, {{ $estabelecimento->numero }}
-                            </div>
-                            <div class="text-xs text-gray-500 mt-1">
-                                {{ $estabelecimento->bairro }} • {{ $estabelecimento->municipioRel->descricao ?? 'SC' }}
+                        <td class="px-6 py-4 text-right whitespace-nowrap">
+                            <div class="text-gray-900 font-mono font-medium">
+                                R$ {{ number_format($estabelecimento->empresa->capital_social, 2, ',', '.') }}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-right">
-                            <a href="{{ route('cnpj.show', ['cnpj' => $cnpjCompleto]) }}" class="inline-flex items-center justify-center px-4 py-2 border border-indigo-100 text-xs font-bold rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white transition-all shadow-sm hover:shadow-md">
+                            <a href="{{ route('cnpj.show', ['cnpj' => $cnpjCompleto]) }}"
+                               class="inline-flex items-center justify-center px-4 py-2 border border-indigo-100 text-xs font-bold rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white transition-all shadow-sm hover:shadow-md">
                                 Detalhes
                             </a>
                         </td>

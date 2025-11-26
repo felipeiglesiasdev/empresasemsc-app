@@ -24,7 +24,6 @@
                 :cepFormatado="$cepFormatado"
                 :dadosCep="$dadosCep"
                 :totalEmpresas="$totalEmpresas"
-                :capitalSocialTotal="$capitalSocialTotal"
                 :topCnaes="$topCnaes"
             />
 
