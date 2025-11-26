@@ -28,7 +28,7 @@
             </div>
 
             <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 text-white max-w-sm w-full" x-data="cepBusca()">
-                <form class="space-y-3" @submit.prevent="redirecionar">
+                <form class="space-y-3" @submit.prevent="redirecionar" @keyup.enter.prevent="redirecionar">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-lg bg-indigo-800 flex items-center justify-center shadow-inner">
                             <i class="bi bi-geo-alt text-xl"></i>
@@ -66,24 +66,27 @@
     function cepBusca() {
         return {
             cepDigitado: '',
+            cepLimpo: '',
             valido: false,
             mensagem: 'Informe 8 dígitos ou use o formato 00000-000.',
             formatar() {
-                const apenasNumeros = this.cepDigitado.replace(/\D/g, '').slice(0, 8);
-                if (apenasNumeros.length > 5) {
-                    this.cepDigitado = `${apenasNumeros.slice(0, 5)}-${apenasNumeros.slice(5)}`;
+                this.cepLimpo = this.cepDigitado.replace(/\D/g, '').slice(0, 8);
+                if (this.cepLimpo.length > 5) {
+                    this.cepDigitado = `${this.cepLimpo.slice(0, 5)}-${this.cepLimpo.slice(5)}`;
                 } else {
-                    this.cepDigitado = apenasNumeros;
+                    this.cepDigitado = this.cepLimpo;
                 }
-                this.valido = apenasNumeros.length === 8;
+                this.valido = this.cepLimpo.length === 8;
                 this.mensagem = this.valido
                     ? 'Pronto! Clique em buscar para ver as empresas do CEP.'
                     : 'Informe 8 dígitos ou use o formato 00000-000.';
-                this.cepLimpo = apenasNumeros;
+                if (this.valido) {
+                    this.redirecionar();
+                }
             },
             redirecionar() {
                 if (!this.valido) return;
-                const url = `{{ route('ceps.show', ['cep' => '__CEP__']) }}`.replace('__CEP__', this.cepDigitado.replace(/\D/g, ''));
+                const url = `{{ route('ceps.show', ['cep' => '__CEP__']) }}`.replace('__CEP__', this.cepLimpo);
                 window.location.href = url;
             },
         };
